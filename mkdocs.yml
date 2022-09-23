@@ -1,0 +1,94 @@
+site_name: Actuated
+site_description: Realise the potential of blazingly fast builds.
+site_author: OpenFaaS Ltd
+site_url: https://docs.actuated.dev/
+
+# Repository
+repo_name: self-actuated/actuated
+repo_url: https://github.com/self-actuated
+edit_uri: ""
+
+copyright: |
+  Copyright &copy; 2022 OpenFaaS Ltd
+theme:
+  name: material
+  # custom_dir: docs/theme
+  logo: images/logo.png
+
+  palette:
+  - scheme: default
+    primary: black
+    toggle:
+      icon: material/toggle-switch-off-outline
+      name: Switch to dark mode
+  - scheme: slate
+    primary: black
+    toggle:
+      icon: material/toggle-switch
+      name: Switch to light mode
+
+  font:
+    text: Roboto, Helvetica
+    code: Roboto Mono
+  features:
+    - navigation.tracking
+    - navigation.sections
+    - toc.integrate
+    # - navigation.instant
+
+  include_search_page: false
+  search_index_only: true
+
+  language: en
+
+  # favicon: images/favicon.ico
+
+extra:
+  search:
+    languages: "en"
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/self-actuated/
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/selfactuated
+
+plugins:
+  - search
+  
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - markdown.extensions.admonition
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - markdown.extensions.def_list
+  - markdown.extensions.footnotes
+  - markdown.extensions.meta
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+nav:
+  - Overview:
+      - Introduction: index.md
+
+# extra:
+#   analytics:
+#     provider: google
+#     property: UA-60759269-5
+#     anonymize_ip: true
