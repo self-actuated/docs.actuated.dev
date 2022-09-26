@@ -24,6 +24,17 @@ Learn more in the [FAQ](faq.md).
 !!! info "End User License Agreement (EULA)"
     Make sure you've read the [Actuated EULA](https://github.com/self-actuated/actuated/blob/master/EULA.md) before registering your organisation with the actuated GitHub App.
 
+1. Open the link that you received to install our GitHub App
+2. Click **Install app**
+3. Select the organisation you want to install the Actuated app to
+4. Install the app on all repositories or select repositories
+
+    ![Install GitHub app](/images/install_github_app.png)
+
+5. Once installed you will will see the permissions and other configuration options for the Actuated app on your selected account. To install the app on another account you can repeat these installation steps.
+
+To manage or uninstall the Actuated app navigate to "Settings" for your repository or organisation and click on "GitHub Apps" in the left sidebar. Select the Actuated app from the list and click "configure".
+
 ## Next steps
 
 Then you'll [Add your first agent](add-agent.md)
