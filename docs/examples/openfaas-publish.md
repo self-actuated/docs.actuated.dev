@@ -15,7 +15,7 @@ Certified for:
 - [x] `x86_64`
 
 !!! info "Use a private repository"
-    GitHub recommends using a private repository with self-hosted runners. Learn why in the [FAQ](/faq.md).
+    GitHub recommends using a private repository with self-hosted runners. Learn why in the [FAQ](/faq).
 
 ## Try out the action on your agent
 
