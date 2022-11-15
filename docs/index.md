@@ -68,7 +68,7 @@ And actuated will run your jobs efficiently across a fleet of hosts, or a single
 
     [Nick Gerace, System Initiative](https://twitter.com/search?q=%40nickgeracehacks%20actuated&src=typed_query&f=top)
 
-* [It is awesome to see the work of Alex Ellis with Firecracker VMs. They are provisioning and running Github Actions in isolated VMs in seconds (vs minutes)."
+* It is awesome to see the work of Alex Ellis with Firecracker VMs. They are provisioning and running GitHub Actions in isolated VMs in seconds (vs minutes)."
 
     [Rinat Abdullin, ML & Innovation at Trustbit](https://twitter.com/abdullin/status/1588817424958521344)
 
