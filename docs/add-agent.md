@@ -128,7 +128,6 @@ Make sure you've read the [Actuated EULA](https://github.com/self-actuated/actua
     VwaHniNYHn5niJHH/DgvXMWDECoKA1ZJyMdWC3MuIlyfWVzT5N7a/HPTzyzlrdCl
     bwIDAQAB
     -----END RSA PUBLIC KEY-----
-
     EOF
 
     agent encrypt --key ./actuated.pem \
@@ -182,6 +181,44 @@ Make sure you've read the [Actuated EULA](https://github.com/self-actuated/actua
     For ARM64 Actuated Agents, change the prefix of the image tags from `x86-64-` to `aarch64-`
 
     You can also run the Actuated Agent software as a systemd unit file for automatic restarts and to start upon boot-up.
+
+    An example of a systemd file you can use:
+
+    ```bash
+    cat <<EOF > actuated.service
+    [Unit]
+    Description=Actuated Agent
+    [Service]
+    User=root
+    Type=simple
+    ExecStart=/root/start.sh
+    Restart=always
+    RestartSec=5s
+
+    [Install]
+    WantedBy=multi-user.target
+    EOF
+    ```
+    Double-check the `ExecStart` directive to make sure it includes the path to your `start.sh` file.
+    
+    The usual place to save the unit file is: `/etc/systemd/system/actuated.service`:
+
+    ```bash
+    sudo cp actuated.service /etc/systemd/system/
+    ```
+
+    After saving your service file, you can start the service for the first time.
+
+    ```bash
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now actuated
+    ```
+
+    Verify that it is running:
+
+    ```bash
+    systemctl status actuated
+    ```
 
 6. Send us your agent's connection info
 
