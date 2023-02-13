@@ -107,6 +107,7 @@ nav:
       - Multi-arch images with buildx: examples/multiarch-buildx.md
       - Docker run/build: examples/docker.md
       - Local Registry Mirror: examples/registry-mirror.md
+      - GitHub Actions cache: examples/github-actions-cache.md
       - Publish an OpenFaaS function: examples/openfaas-publish.md
       - Deploy a Helm chart: examples/openfaas-helm.md
       - Debug a job with SSH: examples/debug-ssh.md
