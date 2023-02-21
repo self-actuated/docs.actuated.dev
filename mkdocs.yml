@@ -101,6 +101,7 @@ nav:
       - System Info: examples/system-info.md
       - Job Matrix: examples/matrix.md
       - Compile a Kernel: examples/kernel.md
+      - Run a KVM guest: examples/kvm-guest.md
       - Kubernetes with K3s: examples/k3s.md
       - Kubernetes with KinD: examples/kind.md
       - Kubernetes regression matrix: examples/matrix-k8s.md

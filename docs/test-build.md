@@ -60,6 +60,12 @@ This build will show you the specs, OS and Kernel name reported by the MicroVM.
     echo Kernel and OS info
     uname -a
 
+    if ! [ -e /dev/kvm ]; then
+        echo "/dev/kvm does not exist"
+    else
+        echo "/dev/kvm exists"
+    fi
+
     echo OS
     cat /etc/os-release
 
