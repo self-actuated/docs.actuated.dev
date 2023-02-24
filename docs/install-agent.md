@@ -163,6 +163,22 @@ Make sure you've read the [Actuated EULA](https://github.com/self-actuated/actua
 
     We'll let you know once we've added your agent to actuated and then it's over to you to start running your builds.
 
+## Upgrade the Actuated Agent
+
+Agent upgrades are normally handled automatically. In some cases it may be necessary to upgrade manually.
+
+To manually upgrade the agent to the latest version run:
+
+```bash
+agent upgrade
+```
+
+The agent has to be restarted after running the upgrade command:
+
+```bash
+sudo systemctl restart actuated
+```
+
 ## Next steps
 
 You can now start your first build and see it run on your actuated agent.
