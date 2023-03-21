@@ -99,6 +99,7 @@ nav:
   - Tasks:
     - Setup a Registry Mirror: tasks/registry-mirror.md
     - Debug a job with SSH: tasks/debug-ssh.md
+    - Get the CLI: cli.md 
     - Troubleshooting: troubleshooting.md
 
   - Examples:
