@@ -23,11 +23,17 @@ Determine the public IP of your instance:
 
 Now imagine that your sub-domain is `agent.example.com`, you need to create a DNS A record of `agent.example.com=141.73.80.100`, changing both the sub-domain and IP to your own.
 
-Once created, edit the start.sh file on the agent and add two flags:
+Once the agent is installed, edit /etc/default/actuated on the agent and set the following two variables:
 
 ```
---letsencrypt-domain agent.example.com \
---letsencrypt-email webmaster@agent.example.com
+AGENT_LETSENCRYPT_DOMAIN="agent.example.com"
+AGENT_LETSENCRYPT_EMAIL="webmaster@agent.example.com"
+```
+
+Restart the agent:
+
+```bash
+sudo systemctl restart actuated
 ```
 
 Your agent's endpoint URL is going to be: `https://agent.example.com` on port 443

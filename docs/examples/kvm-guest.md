@@ -12,14 +12,11 @@ There are some prerequisites to enable KVM support:
 
 1. Make sure [nested virtualization is enabled](https://ostechnix.com/how-to-enable-nested-virtualization-in-kvm-in-linux/) on the Agent host.
 
-2. Modify the `start.sh` file for your Actuated Agent and add the `kvm` suffix to the kernel-ref tag:
+2. Edit `/etc/default/actuated` for your Actuated Agent and add the `kvm` suffix to the `AGENT_KERNEL_REF` variable:
 
     ```diff
-    sudo -E agent up \
-        --image-ref=ghcr.io/openfaasltd/actuated-ubuntu20.04:x86-64-latest \
-    -   --kernel-ref=ghcr.io/openfaasltd/actuated-kernel-5.10.77:x86-64-latest \
-    +   --kernel-ref=ghcr.io/openfaasltd/actuated-kernel-5.10.77:x86-64-latest-kvm \
-        --listen-addr 127.0.0.1:
+    - AGENT_KERNEL_REF="ghcr.io/openfaasltd/actuated-kernel-5.10.77:x86-64-latest"
+    + AGENT_KERNEL_REF="ghcr.io/openfaasltd/actuated-kernel-5.10.77:x86-64-latest-kvm"
     ```
 
 3. Restart the Agent to use the new kernel.

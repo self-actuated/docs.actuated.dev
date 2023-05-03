@@ -83,75 +83,45 @@ If you missed it in the "Provision a Server" page, we recommend you use Ubuntu 2
     * The public key of the agent which we use to encrypt tokens sent to the agent to bootstrap runners to GitHub Actions
     * A unique API token encrypted with our public key, which is used by the control plane to authenticate each message sent to the agent
 
-4. Expose the agent's endpoint using HTTPS
+4. Configure and start the agent
 
-    The actuated control plane will only communicate with a HTTPS endpoint to ensure properly encryption is in place. An API token is used in addition with the TLS connection for all requests.
+    Use the `install-service` command to configure and install a systemd service to start the actuated agent.
 
-    In addition, any bootstrap tokens sent to the agent are further encrypted with the agent's public key.
+    The actuated control plane will only communicate with agents exposed over HTTPS to ensure proper encryption is in place. An API token is used in addition with the TLS connection for all requests.
+
+    Any bootstrap tokens sent to the agent are further encrypted with the agent's public key.
 
     For hosts with public IPs, you will need to use the built-in TLS provisioning with Let's Encrypt. For hosts behind a firewall, NAT or in a private datacenter, you can use inlets to create a secure tunnel to the agent.
 
     We're considering other models for after the pilot, for instance GitHub's own API has the runner make an outbound connection and uses long-polling.
 
-    See also: [expose the agent with HTTPS](/expose-agent/)
-
-5. Start the agent
-
-    We suggest starting the agent through a script or tmux session initially, then once we've confirmed it's enrolled correctly, switch over to systemd.
-
-    The easiest way to configure everything is to run as root, however, you can also use a non-root user with passwordless `sudo`, if you prefer.
-
     These steps are for hosts with public IP addresses, if you want to [use inlets](/expose-agent/), jump to the end of this step.
 
-    For an *x86_64* server, add the following to: `/root/start.sh`:
+    The easiest way to configure everything is to run as root. The --user flag can be used to run under a custom user account, however sudo access is still required for actuated.
+
+    For an *x86_64* server, run:
 
     ```bash
-    #!/bin/bash
-
-    echo Running Agent from: ./agent
     DOMAIN=agent1.example.com
 
-    sudo -E agent up \
-        --image-ref=ghcr.io/openfaasltd/actuated-ubuntu20.04:x86-64-latest \
-        --kernel-ref=ghcr.io/openfaasltd/actuated-kernel-5.10.77:x86-64-latest \
-        --letsencrypt-domain $DOMAIN \
-        --letsencrypt-email webmaster@$DOMAIN
+    sudo -E agent install-service \
+      --letsencrypt-domain $DOMAIN \
+      --letsencrypt-email webmaster@$DOMAIN \
     ```
 
-    For an Arm64 server, add the following to `/root/start.sh` instead: 
+    For an *Arm64* server, run: 
 
     ```bash
-    #!/bin/bash
-
-    echo Running Agent from: ./agent
     DOMAIN=agent1.example.com
 
-    sudo -E agent-arm64 up \
-        --image-ref=ghcr.io/openfaasltd/actuated-ubuntu20.04:aarch64-latest  \
-        --kernel-ref=ghcr.io/openfaasltd/actuated-kernel-5.10.77:aarch64-latest \
-        --letsencrypt-domain $DOMAIN \
-        --letsencrypt-email webmaster@$DOMAIN
+    sudo -E agent-arm64 install-service \
+      --letsencrypt-domain $DOMAIN \
+      --letsencrypt-email webmaster@$DOMAIN \
     ```
     
-    Note the different binary name: `agent-arm64` and suffix on the image references: `aarch64-latest`.
+    Note the different binary name: `agent-arm64`
 
-    For an Actuated Agent behind an [inlets tunnel](https://inlets.dev), do not include the `--letsencrypt-*` flags, and instead add `--listen-addr 127.0.0.1:`.
-
-6. Check that the control-plane is accessible
-
-    ```bash
-    curl -i https://server1.example.com
-    ```
-
-    A correct response is a *403*.
-
-    If you see the expected response, go ahead and install the service as a systemd service:
-
-    ```bash
-    sudo agent install-service \
-        --path /root/start.sh \
-        --user root
-    ```
+    This creates an env file, /etc/default/actuated, with the agent configuration and starts a systemd service.
 
     Check the service's status with:
     
@@ -160,7 +130,17 @@ If you missed it in the "Provision a Server" page, we recommend you use Ubuntu 2
     sudo journalctl -u actuated --since today -f
     ```
 
-7. Send us your agent's connection info
+    For an Actuated Agent behind an [inlets tunnel](https://inlets.dev), do not include the `--letsencrypt-*` flags, and instead add `--listen-addr 127.0.0.1:`. See [expose the agent with HTTPS](/expose-agent/) for instructions on how the setup inlets.
+
+5. Check that the control-plane is accessible
+
+    ```bash
+    curl -i https://server1.example.com
+    ```
+
+    A correct response is a *403*.
+
+6. Send us your agent's connection info
 
     Share the `$HOME/.actuated/agent.yaml` file with us so we can add your agent to the actuated control plane.
 
