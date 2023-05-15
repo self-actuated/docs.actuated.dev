@@ -25,7 +25,7 @@ If you missed it in the "Provision a Server" page, we recommend you use Ubuntu 2
 
 1. Download the Actuated Agent and installation script to the server
 
-    > Setting up an ARM64 agent? Wherever you see `agent` in a command, change it to: `agent-arm64`. So instead of `agent keygen` you'd run `agent-aarch64 keygen`.
+    > Setting up an ARM64 agent? Wherever you see `agent` in a command, change it to: `agent-arm64`. So instead of `agent keygen` you'd run `agent-arm64 keygen`.
 
     Install [crane](https://github.com/google/go-containerregistry/releases):
 
@@ -106,7 +106,7 @@ If you missed it in the "Provision a Server" page, we recommend you use Ubuntu 2
 
     sudo -E agent install-service \
       --letsencrypt-domain $DOMAIN \
-      --letsencrypt-email webmaster@$DOMAIN \
+      --letsencrypt-email webmaster@$DOMAIN
     ```
 
     For an *Arm64* server, run: 
@@ -116,7 +116,7 @@ If you missed it in the "Provision a Server" page, we recommend you use Ubuntu 2
 
     sudo -E agent-arm64 install-service \
       --letsencrypt-domain $DOMAIN \
-      --letsencrypt-email webmaster@$DOMAIN \
+      --letsencrypt-email webmaster@$DOMAIN
     ```
     
     Note the different binary name: `agent-arm64`
