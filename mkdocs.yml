@@ -100,7 +100,8 @@ nav:
   - Tasks:
     - Setup a Registry Mirror: tasks/registry-mirror.md
     - Debug a job with SSH: tasks/debug-ssh.md
-    - Set-up the CLI: tasks/cli.md 
+    - Set-up the CLI: tasks/cli.md
+    - Setup self-hosted cache: tasks/local-github-cache.md
     - Monitoring: tasks/monitoring.md
     - Troubleshooting: troubleshooting.md
 
@@ -115,10 +116,10 @@ nav:
       - Publish an OpenFaaS function: examples/openfaas-publish.md
       - Deploy a Helm chart: examples/openfaas-helm.md
       - Custom VM sizes: examples/custom-vm-size.md
+      - Using caching in builds: examples/github-actions-cache.md
   - Advanced examples:
     - Run a KVM guest: examples/kvm-guest.md
     - Multi-arch images with buildx: examples/multiarch-buildx.md
-    - GitHub Actions cache: examples/github-actions-cache.md
 
 extra:
   analytics:
