@@ -51,8 +51,14 @@ We have a sponsored program with the CNCF and Ampere for various Open Source pro
 
 Sponsored projects are required to [add our GitHub badge](/images/actuated-badge.png) to the top of their README file for each repository where the actuated is being used, along with any other GitHub badges such as build status, code coverage, etc.
 
-```
+```html
 <a href="https://actuated.dev/"><img alt="Arm CI sponsored by Actuated" src="https://docs.actuated.dev/images/actuated-badge.png" width="120px"></img></a>
+```
+
+or
+
+```md
+[![Arm CI sponsored by Actuated](https://img.shields.io/badge/SA_actuated.dev-004BDD)](https://actuated.dev/)
 ```
 
 For an example of what this would look like, see the [inletsctl project README](https://github.com/inlets/inletsctl).
