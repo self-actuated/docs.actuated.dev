@@ -70,7 +70,7 @@ If you missed it in the "Provision a Server" page, we recommend you use Ubuntu 2
     ```bash
     (
     cd agent
-    sudo ./install.sh
+    sudo -E ./install.sh
     )
     ```
 
