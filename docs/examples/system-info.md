@@ -75,3 +75,47 @@ jobs:
 ```
 
 Note how the hostname changes every time the job is run.
+
+## Perform a basic benchmark
+
+Update the specs.sh file to include benchmarks for disk and network connection:
+
+```bash
+echo Installing hdparm
+
+sudo apt update -qqqqy && sudo apt install -qqqqy hdparm
+
+echo Read speed
+
+sudo hdparm -t $(mount |grep "/ "|cut -d " " -f1)
+
+echo Write speed
+
+sync; dd if=/dev/zero of=./tempfile bs=1M count=1024; sync
+
+echo Where is this runner?
+
+curl -s http://ip-api.com/json|jq
+
+echo Information on main disk
+
+df -h /
+
+echo Public IP:
+
+curl -s -L -S https://checkip.amazonaws.com
+
+echo Checking speed
+sudo pip install speedtest-cli
+speedtest-cli
+```
+
+For the fastest servers backed by NVMes, with VMs running on a dedicated drive, we tend to see:
+
+* Read speeds of 1000+ MB/s.
+* Write speeds of 1000+ MB/s.
+
+The Internet speed test will give you a good idea of how quickly large artifacts can be uploaded or downloading during jobs.
+
+The instructions for a [Docker registry cache on the server](/tasks/registry-mirror) can make using container images from public registries much quicker.
+
