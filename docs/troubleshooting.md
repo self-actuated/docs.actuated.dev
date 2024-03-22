@@ -75,10 +75,10 @@ We've created simple instructions on how to set up a registry mirror to cache im
 
 ## A job is running out of RAM or needs more cores
 
-If you suspect a job is running out of RAM or would benefit from more vCPU, you can increase the allocation by changing the `actuated` label, as follows:
+If you suspect a job is running out of RAM or would benefit from more vCPU, you can increase the allocation by changing the `runs-on` label, as follows:
 
 ```yaml
--runs-on: actuated
+-runs-on: actuated-8cpu-8gb
 +runs-on: actuated-8cpu-16gb
 ```
 
@@ -89,6 +89,8 @@ For arm64 builds, the format follows the same convention: `actuated-arm64-8cpu-1
 Bear in mind that if you set the RAM higher than the default, this may result in fewer concurrent VMs being scheduled on a single server.
 
 The maximum amount of vCPU that can be set for a single job is 32 vCPU, this is an implementation detail of Firecracker and may change in the future.
+
+To find out exactly how many resources are required, see our [blog post on right sizing with the vmmeter tool](https://actuated.dev/blog/right-sizing-vms-github-actions).
 
 ## Disk space is running out for a job
 

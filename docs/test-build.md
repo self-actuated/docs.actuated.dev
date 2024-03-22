@@ -32,8 +32,8 @@ Note that if you're running on an Arm64 machine, instead of `runs-on: actuated`,
     jobs:
         specs:
             name: specs
-            # runs-on: actuated-arm64
-            runs-on: actuated
+            # runs-on: actuated-arm64-2cpu-8gb
+            runs-on: actuated-arm64-2cpu-8gb
             steps:
             - uses: actions/checkout@v1
             - name: Check specs
@@ -41,7 +41,7 @@ Note that if you're running on an Arm64 machine, instead of `runs-on: actuated`,
                 ./specs.sh
     ```
 
-    Note that the `runs-on:` field says `actuated` and not `ubuntu-latest`. This is how the actuated control plane knows to send this job to your agent.
+    Note that the `runs-on:` field says `actuated-` and not `ubuntu-latest`. This is how the actuated control plane knows to send this job to your agent. There are no fixed sets of vCPU and RAM, you can make up your own combinations.
 
     Then add `specs.sh` to the root of the repository, and remember, that you must run `chmod +x specs.sh` afterwards to make it executable.
 
