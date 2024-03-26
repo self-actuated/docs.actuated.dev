@@ -115,7 +115,9 @@ Do you have any questions or comments? Feel free to reach out to us over Slack i
 
 ## Enable actuated for an existing repository
 
-To add actuated to an existing repository, simply edit the workflow YAML file and change `runs-on:` to `runs-on: actuated` and for Arm builds, change it to: `runs-on: actuated-arm64`.
+To add actuated to an existing repository, simply edit the workflow YAML file and change `runs-on:` to `runs-on: actuated-4cpu-16gb` and for Arm builds, change it to: `runs-on: actuated-arm64-4cpu-16gb`. The values for CPU and RAM can be customised to your needs, and there are no hard-coded, or fixed combinations, to allow for flexibility.
+
+Learn more in [Custom VM Sizes](/examples/custom-vm-size/)
 
 ## Recommended: Enable a Docker Hub mirror
 
