@@ -40,16 +40,18 @@ Shipped
 * [x] At a glance insights for the day's activity so far
 * [x] CLI/API for remote logs of VMs and the actuated agent
 * [x] CLI/API for restarting the agent and rebooting a server
-* [x] OIDC Proxy for OpenFaaS CE/Standard/Enterprise users for keyless login
 * [x] Examples for using S3/Minio running on the server as an actions cache, instead of the default hosted cache within Azure
 * [x] Specify a custom runner size for an individual workflow - i.e. `actuated-8cpu-12gb`
 * [x] Specify `actuated-any` to run jobs on any available server whether amd64 or arm64, for architecture-agnostic workflows such as npm or for browser testing. 
+* [x] GPU pass-through for ML and AI workloads - [Accelerate GitHub Actions with dedicated GPUs](https://actuated.dev/blog/gpus-for-github-actions)
+
+In progress:
+
+* [ ] Actuated for self-hosted GitLab. (see below section)
 
 Coming next:
 
-* [ ] GPU pass-through for ML and AI workloads
 * [ ] Support for private, self-hosted GitHub Enterprise Server (GHES) installations
-* [ ] Actuated for self-hosted GitLab. [Watch the video here](https://twitter.com/alexellisuk/status/1667130226327863298?s=20)
 
 Open for customer contributions:
 
@@ -67,4 +69,29 @@ Under consideration:
 Items marked under consideration are awaiting customer interest. Reach out to us if you'd like to see these features sooner.
 
 Is there something else you need? If you're already a customer, contact us via [the actuated Slack](https://self-actuated.slack.com) or [Register for interest](https://forms.gle/8XmpTTWXbZwWkfqT6).
+
+## Actuated for GitLab
+
+[Learn about the tech preview](https://actuated.dev/blog/secure-microvm-ci-gitlab)
+
+Ready for use by customers:
+
+* [x] Actuated integration with self-hosted GitLab CI either on-premises or on the cloud
+* [x] Ephemeral one-time runners with their own dedicated Docker Daemon
+* [x] Immutable VM image for each build, built with automation
+* [x] Schedule jobs across multiple bare-metal hosts or VMs with KVM available
+* [x] Custom VM size scheduling
+* [x] Manual enrollment of of projects as required
+
+Coming soon:
+
+* [ ] Automatic enrollment of of projects as required when the `actuated` tag has been added
+* [ ] actuated-cli integration
+* [ ] actuated dashboard - daily glance, runners and build queue
+
+Coming later:
+
+* [ ] actuated dashboard - SSH debug, insights / reports
+
+[Register your interest](https://forms.gle/8XmpTTWXbZwWkfqT6) if you'd like to talk to our team.
 
