@@ -1,14 +1,16 @@
 ## Expose the agent's API over HTTPS
 
-The actuated agent serves HTTP, and must be accessible by the actuated control plane.
+The actuated agent serves HTTP, and is accessed by the Actuated control plane.
 
 We expect most of our customers to be using hosts with public IP addresses, and the combination of an API token plus TLS is a battle tested combination.
 
-For anyone running with private hosts, OpenFaaS Ltd's inlets product can be used to get incoming traffic over a secure tunnel
+For anyone running with private hosts within a firewall, a private peering option is available for enterprise companies, or our inlets network tunnel can be used with an IP allow list.
 
 ## For a host on a public cloud
 
 If you're running the agent on a host with a public IP, you can use the built-in TLS mechanism in the actuated agent to receive a certificate from Let's Encrypt, valid for 90 days. The certificate will be renewed by the actuated agent, so there are no additional administration tasks required.
+
+The installation will automatically configure the below settings. They are included just for reference, so you can understand what's involved or tweak the settings if necessary.
 
 ![Accessing the agent's endpoint built-in TLS and Let's Encrypt](images/builtin-tls.png)
 > Pictured: Accessing the agent's endpoint built-in TLS and Let's Encrypt
@@ -21,7 +23,7 @@ Determine the public IP of your instance:
 141.73.80.100
 ```
 
-Now imagine that your sub-domain is `agent.example.com`, you need to create a DNS A record of `agent.example.com=141.73.80.100`, changing both the sub-domain and IP to your own.
+Now imagine that your sub-domain is `agent.example.com`, you need to create a DNS A or DNS CNAME record of `agent.example.com=141.73.80.100`, changing both the sub-domain and IP to your own.
 
 Once the agent is installed, edit /etc/default/actuated on the agent and set the following two variables:
 
@@ -33,16 +35,31 @@ AGENT_LETSENCRYPT_EMAIL="webmaster@agent.example.com"
 Restart the agent:
 
 ```bash
+sudo systemctl daemon-reload
 sudo systemctl restart actuated
 ```
 
 Your agent's endpoint URL is going to be: `https://agent.example.com` on port 443
 
-## Private hosts - on-premises, behind NAT or at home
+## Private hosts - private peering for enterprises
 
-You'll need a way to expose the client to the Internet, which includes HTTPS encryption and a sufficient amount of connections/traffic per minute.
+For enterprise customers, we can offer private peering of the actuated agent for when your servers are behind a corporate firewall, or have no inbound Internet access.
 
-[Inlets](https://inlets.dev/) provides a quick and secure solution here. It is available on a [monthly subscription](https://inlets.dev/pricing), bear in mind that the "Personal" plan is not for this kind of commercial use.
+![Peering example](/images/peering.png)
+> Peering example for an enterprise with two agents within their own private firewalls.
+
+This option is built-into the actuated agent, and requires no additional setup, firewall or routing rules. It's similar to how the GitHub Actions agent works by creating an outbound connection, without relying on any inbound data path.
+
+* The client makes an outbound connect to the Actuated control-plane.
+* If for any reason, the connection gets closed or severed, it will reconnect automatically.
+* All traffic is encrypted with HTTPS.
+* Only the Actuated control-plane will be able to communicate with the agent, privately.
+
+## Private hosts - behind NAT or at the office
+
+The default way to configure a server for actuated, is to have its HTTPS endpoint available on the public Internet. A quick and easy way to do that is with our inlets network tunnel tool. This works by creating a VM with a public IP address, then connecting a client from your private network to the VM. Then the port on the private machine becomes available on the public VM for the Actuated control-plane to access as required.
+
+An [IP allow-list](https://inlets.dev/blog/2021/10/15/allow-lists.html) can also be configured with the egress IP address of the Actuated control-plane. We will provide the egress IP address upon request to customers.
 
 ![Accessing the agent's private endpoint using an inlets-pro tunnel](images/tunnel-server.png)
 > Pictured: Accessing the agent's private endpoint using an inlets-pro tunnel
@@ -69,6 +86,8 @@ inletsctl create \
 ```
 
 Then note down the tunnel's wss:// URL and token.
+
+If you wish to configure an IP allow list, log into the VM with SSH and then edit the systemd unit file for `inlets-pro`. Add the actuated controller egress IP [as per these instructions](https://inlets.dev/blog/2021/10/15/allow-lists.html).
 
 Then run a HTTPS client to expose your agent:
 
