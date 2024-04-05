@@ -23,6 +23,13 @@ If you missed it in the "Provision a Server" page, we recommend you use Ubuntu 2
 
 ## Install the Actuated Agent
 
+!!! info "Do you want a free, expert installation?"
+
+    Our team can install the agent and configure the server for you. Just request our public SSH key, and add it to `.ssh/authorized_keys` and create a DNS A or CNAME record for your server, and send all the details over to us on the Actuated Slack.
+
+    Alternatively, you can run through the semi-automatic installation with the details below.
+
+
 1. Install your license for actuated
 
     The license is available in the email you received when you purchased your subscription. If someone else bought the subscription, they should be able to forward it to you.
@@ -139,7 +146,7 @@ If you missed it in the "Provision a Server" page, we recommend you use Ubuntu 2
     sudo journalctl -u actuated --since today -f
     ```
 
-    For an Actuated Agent behind an [inlets tunnel](https://inlets.dev), do not include the `--letsencrypt-*` flags, and instead add `--listen-addr "127.0.0.1:"`. See [expose the agent with HTTPS](/expose-agent/) for instructions on how the setup inlets.
+    For an Actuated Agent behind a firewall, or on a private network, do not include the `--letsencrypt-*` flags, and instead add `--listen-addr "127.0.0.1:"`. Then read [expose the agent with HTTPS](/expose-agent/) for details on our private peering option or how to setup an [inlets tunnel](https://inlets.dev/).
 
     For example (with inlets):
 
