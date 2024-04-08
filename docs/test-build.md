@@ -10,7 +10,7 @@ The below steps should take less than 10 minutes.
 
 This build will show you the specs, OS and Kernel name reported by the MicroVM.
 
-Note that if you're running on an Arm64 machine, instead of `runs-on: actuated`, you'll need to specify `runs-on: actuated-arm64` instead.
+Note that if you're running on an Arm server, You'll adapt the prefix of `runs-on: actuated-`, to `runs-on: actuated-arm64-` instead.
 
 1. Create a test repository and a GitHub Action
 
