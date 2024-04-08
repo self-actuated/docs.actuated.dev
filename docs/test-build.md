@@ -126,6 +126,7 @@ Do you use the Docker Hub in your builds? Any Dockerfile with a `FROM` that does
 1. Option 1 - authenticate
 
     Run `docker login` or use the [Docker Login Action](https://github.com/docker/login-action) just before you run Docker build or pull down any images with tooling like KinD
+
 2. Option 2 - use a cache/mirror
 
     Use our guide to [Set up a registry cache and mirror](/tasks/registry-mirror) - this uses less bandwidth and increases the speed of builds where images are already present in the cache.
