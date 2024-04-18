@@ -8,6 +8,9 @@ There are some prerequisites to enable KVM support:
 - A bare-metal host for the Agent is required.
 
 
+!!! info "Nested virtualisation is a premium feature"
+    This feature requires a plan size of 15 concurrent builds or greater, however you can get a 14-day free trial by contacting our team directly through the actuated Slack.
+
 ## Configure the Agent
 
 1. Make sure [nested virtualization is enabled](https://ostechnix.com/how-to-enable-nested-virtualization-in-kvm-in-linux/) on the Agent host.
