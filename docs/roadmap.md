@@ -47,10 +47,12 @@ Shipped
 
 In progress:
 
+* [ ] Linux Kernel 6.1 for Arm
 * [ ] Actuated for self-hosted GitLab. (see below section)
 
 Coming next:
 
+* [ ] Linux Kernel 6.1 for *x86_64*
 * [ ] Support for private, self-hosted GitHub Enterprise Server (GHES) installations
 
 Open for customer contributions:

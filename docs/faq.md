@@ -190,11 +190,9 @@ The image is built automatically using GitHub Actions and is available on a cont
 
 ## What Kernel version is being used?
 
-At time of writing, actuated is using a 5.10.201 Kernel version, and will upgrade to various patch versions as they become available.
+Actuated is limited to using supported Kernels due to constraints [from the Firecracker microVM project](https://github.com/firecracker-microvm/firecracker/tree/master/resources/guest_configs). At time of writing, Linux Kernel 5.10.201 is used for *x86_64* and aarch64.
 
-As and when [newer versions are made available](https://github.com/firecracker-microvm/firecracker/tree/master/resources/guest_configs), we'll upgrade our support.
-
-The Firecracker team has released a guest configuration for the 6.1 Kernel, however there are several known issues which need to be addressed before it can be used with actuated.
+We currently have a 6.1 Kernel in testing for aarch64, which will be rolled out soon for CNCF projects.
 
 ### Where are the Kernel headers / includes?
 
