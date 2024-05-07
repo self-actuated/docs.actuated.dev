@@ -43,8 +43,9 @@ Shipped
 * [x] Examples for using S3/Minio running on the server as an actions cache, instead of the default hosted cache within Azure
 * [x] Specify a custom runner size for an individual workflow - i.e. `actuated-8cpu-12gb`
 * [x] Specify `actuated-any` to run jobs on any available server whether amd64 or arm64, for architecture-agnostic workflows such as npm or for browser testing. 
-* [x] GPU pass-through for ML and AI workloads - [Accelerate GitHub Actions with dedicated GPUs](https://actuated.dev/blog/gpus-for-github-actions)
+* [x] GPU pass-through for ML and AI workloads - [Accelerate GitHub Actions with dedicated GPUs](https://actuated.dev/blog/gpus-for-github-actions) - [Run AI models with ollama in CI with GitHub Actions](https://actuated.dev/blog/ollama-in-github-actions)
 * [x] Linux Kernel 6.1 for 64-bit Arm
+* [x] Burst above subscription concurrency for busy periods - [Introducing burst billing and capacity for GitHub Actions](https://actuated.dev/blog/burst-billing-capacity)
 
 In progress:
 
