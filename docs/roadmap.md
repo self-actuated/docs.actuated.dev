@@ -44,10 +44,10 @@ Shipped
 * [x] Specify a custom runner size for an individual workflow - i.e. `actuated-8cpu-12gb`
 * [x] Specify `actuated-any` to run jobs on any available server whether amd64 or arm64, for architecture-agnostic workflows such as npm or for browser testing. 
 * [x] GPU pass-through for ML and AI workloads - [Accelerate GitHub Actions with dedicated GPUs](https://actuated.dev/blog/gpus-for-github-actions)
+* [x] Linux Kernel 6.1 for 64-bit Arm
 
 In progress:
 
-* [ ] Linux Kernel 6.1 for Arm
 * [ ] Actuated for self-hosted GitLab. (see below section)
 
 Coming next:
