@@ -178,9 +178,9 @@ Depending on your provider, you may also be able to hibernate or suspend servers
 
 Very little, just add / set `runs-on: actuated`
 
-## Is ARM64 supported?
+## Is 64-bit Arm supported?
 
-Yes, actuated is built to run on both Intel/AMD and ARM64 hosts, check your subscription plan to see if ARM64 is included. This includes a Raspberry Pi 4B, AWS Graviton, Oracle Cloud Arm instances and potentially any other ARM64 instances which support virtualisation.
+Yes, actuated is built to run on both Intel/AMD and 64-bit Arm hosts, check your subscription plan to see if 64-bit Arm is included. This includes a Raspberry Pi 4B, AWS Graviton, Oracle Cloud Arm instances and potentially any other 64-bit Arm instances which support virtualisation.
 
 ## What's in the VM image and how is it built?
 
@@ -190,9 +190,16 @@ The image is built automatically using GitHub Actions and is available on a cont
 
 ## What Kernel version is being used?
 
-Actuated is limited to using supported Kernels due to constraints [from the Firecracker microVM project](https://github.com/firecracker-microvm/firecracker/tree/master/resources/guest_configs). At time of writing, Linux Kernel 5.10.201 is used for *x86_64* and aarch64.
+The Firecracker team [provides guest configurations](https://github.com/firecracker-microvm/firecracker/tree/master/resources/guest_configs). These may not LTS, or the latest version available, however they are fully functional for CI/CD use-cases and are known to work with Firecracker.
 
-We currently have a 6.1 Kernel in testing for aarch64, which will be rolled out soon for CNCF projects.
+Stable Kernel version:
+
+* x86_64 - Linux Kernel 5.10.201
+* aarch64 - Linux Kernel 5.10.201
+
+Experimental Kernel version:
+
+* aarch64 - Linux Kernel 6.1.90
 
 ### Where are the Kernel headers / includes?
 
@@ -242,7 +249,7 @@ See also: [Debug a GitHub Action with SSH](/tasks/debug-ssh)
 
 Feel free [to book a call with us](register) if you'd like to understand this comparison in more detail.
 
-| Solution                     | Isolated VM          | Speed       | Efficient spread of jobs | Safely build public repos? | ARM64 support | Maintenance required      | Cost                      |
+| Solution                     | Isolated VM          | Speed       | Efficient spread of jobs | Safely build public repos? | 64-bit Arm support | Maintenance required      | Cost                      |
 |------------------------------|----------------------|-------------|--------------------------|----------------------------|---------------|---------------------------|---------------------------|
 | Hosted runners               | :material-check-all: | Poor        | :material-check-all:     | :material-check-all:       | None          | Free minutes in plan `*` | Per build minute          |
 | actuated                     | :material-check-all: | Bare-metal  | :material-check-all:     | :material-check-all:       | Yes           | Very little               | Fixed monthly cost        |
@@ -299,9 +306,9 @@ In addition, Kaniko cannot and will not help you to run that container that you'
 
 ## Do we need to run my Actuated Servers 24/7?
 
-Let's say that you wanted to access a single ARM64 runner to speed up your Arm builds from [33 minutes to < 2 minutes like in this example](https://blog.alexellis.io/blazing-fast-ci-with-microvms/).
+Let's say that you wanted to access a single 64-bit Arm runner to speed up your Arm builds from [33 minutes to < 2 minutes like in this example](https://blog.alexellis.io/blazing-fast-ci-with-microvms/).
 
-The two cheapest options for ARM64 hardware would be:
+The two cheapest options for 64-bit Arm hardware would be:
 
 * Buy a Mac Mini M1, host it in your office or a co-lo with Asahi Linux installed. That's a one-time cost and will last for several years.
 * Or you could rent an AWS a1.metal by the hour from AWS with very little up front cost, and pay for the time you use it.
@@ -330,7 +337,7 @@ At time of writing, only Intel and AMD CPUs support nested virtualisation. This 
 
 ## Is Windows or MacOS supported?
 
-Linux is the only supported platform for actuated at this time on a AMD64 or ARM64 architecture. We may consider other operating systems in the future, feel free to reach out to us.
+Linux is the only supported platform for actuated at this time on a AMD64 or 64-bit Arm architecture. We may consider other operating systems in the future, feel free to reach out to us.
 
 ## Is Actuated free and open-source?
 
