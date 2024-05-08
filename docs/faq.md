@@ -43,7 +43,15 @@ Actuated uses a one-shot VM that is destroyed immediately after a build is compl
 
 ## Who is actuated for?
 
-actuated is primarily for software engineering teams who are currently using GitHub Actions. A GitHub organisation is required for installation, and runners are attached to individual repositories as required, to execute builds.
+actuated is primarily for software engineering teams who are currently using GitHub Actions or GitLab CI.
+
+* You can outsource your CI infrastructure to the actuated team
+* You'll get VM-level isolation, with no risks of side-effects between builds
+* You can run on much faster hardware
+* You'll get insights on how to fine-tune the performance of your builds
+* And save a significant amount of money vs. larger hosted runners if you use 10s or 100s of thousands of minutes per month
+
+For GitHub users, a GitHub organisation is required for installation, and runners are attached to individual repositories as required to execute builds.
 
 ## Is there a sponsored subscription for Open Source projects?
 
@@ -51,37 +59,37 @@ We have a sponsored program with the CNCF and Ampere for various Open Source pro
 
 Sponsored projects are required to [add our GitHub badge](/images/actuated-badge.png) to the top of their README file for each repository where the actuated is being used, along with any other GitHub badges such as build status, code coverage, etc.
 
-```html
-<a href="https://actuated.dev/"><img alt="Arm CI sponsored by Actuated" src="https://docs.actuated.dev/images/actuated-badge.png" width="120px"></img></a>
+```md
+[![Arm CI sponsored by Actuated](https://img.shields.io/badge/SA_actuated.dev-004BDD)](https://actuated.dev/)
 ```
 
 or
 
-```md
-[![Arm CI sponsored by Actuated](https://img.shields.io/badge/SA_actuated.dev-004BDD)](https://actuated.dev/)
+```html
+<a href="https://actuated.dev/"><img alt="Arm CI sponsored by Actuated" src="https://docs.actuated.dev/images/actuated-badge.png" width="120px"></img></a>
 ```
 
 For an example of what this would look like, see the [inletsctl project README](https://github.com/inlets/inletsctl).
 
 ## What kind of machines do I need for the agent?
 
-You'll need either: a bare-metal host (your own, AWS i3.metal or Equinix Metal), or a VM that supports nested virtualisation such as those provided by GCP, DigitalOcean and Azure.
+You'll need either: a bare-metal host (your own machine, Hetzner Dedicated, Equinix Metal, etc), or a VM that supports nested virtualisation such as those provided by OpenStack, GCP, DigitalOcean, Azure, or VMware.
+
+See also: [Provision a Server section](/provision-server)
 
 ## When will Jenkins, GitLab CI, BitBucket Pipeline Runners, Drone or Azure DevOps be supported?
 
-For the pilot phase, we're targeting GitHub Actions because it has fine-grained access controls and the ability to schedule exactly one build to a runner. Most other CI systems expect self-hosted runners to perform many builds, and we believe that to be an anti-pattern. We'll offer advice to teams accepted into the pilot who wish to evaluate GitHub Actions or migrate away from another solution.
+Support for GitHub Actions and GitLab CI is available.
 
-That said, if you're using these tools within your organisation, and face similar issues or concerns, we'd like to hear from you. And we have a proof of concept that works with GitLab CI, so feel free to reach out to us if you feel actuated would be a good fit for your team.
+Unfortunately, other CI systems tend to expect runners to be available indefinitely, which is an anti-pattern. Why? They gather side-effects and often rely on the insecure use of Docker in Docker, privileged containers, or mounting the Docker socket.
 
-[Watch the actuated for GitLab preview](https://twitter.com/alexellisuk/status/1667130226327863298?s=20)
-
-Feel free to contact us at: [contact@openfaas.com](mailto:contact@openfaas.com)
+If you'd like to migrate to GitHub Actions, or GitLab CI, feel free to reach out to us for help.
 
 ## Is GitHub Enterprise supported?
 
 GitHub.com's Pro, Team and Enterprise Cloud plans are supported.
 
-[GitHub Enterprise Server (GHES)](https://docs.github.com/en/enterprise-server@3.5/admin/overview/about-github-enterprise-server) is a self-hosted version of GitHub and may require additional configuration. Please reach out to us if you're interested in using actuated with your installation of GHES.
+[GitHub Enterprise Server (GHES)](https://docs.github.com/en/enterprise-server@3.5/admin/overview/about-github-enterprise-server) is a self-hosted version of GitHub and requires additional onboarding steps. Please reach out to us if you're interested in using actuated with your installation of GHES.
 
 ## What kind of access is required to my GitHub Organisation?
 
@@ -94,9 +102,11 @@ The actuated GitHub App will request:
 * Administrative access to add/remove GitHub Actions Runners to individual repositories
 * Events via webhook for Workflow Runs and Workflow Jobs
 
-Did you know? The actuated service does not need any access to your code or private or public repositories.
+Did you know? The actuated service **does not have any access to your code** or private or public repositories.
 
 ## Can GitHub's self-hosted runner be used on public repos?
+
+Actuated VMs can be used with public repositories, however the standard self-hosted runner when used stand-alone, with Docker, or with Kubernetes cannot.
 
 The GitHub team recommends only running their self-hosted runners on private repositories.
 
@@ -118,18 +128,19 @@ Actuated fixes the isolation problem, and prevents side-effects between builds. 
 
 ## Can I use the containers feature of GitHub Actions?
 
+Yes, it is supported, however it is not required, and may make it harder to debug your builds. We prefer and recommend running on the host directly, which gives better performance and a simpler experience. Common software and packages are already within the root filesystem, and can be added with `setup-X` actions, or `arkade get` or `arkade system install`.
+
 GitHub Action's [Running jobs in a container](https://docs.github.com/en/actions/using-jobs/running-jobs-in-a-container) feature is supported, as is Docker, Buildx, Kubernetes, KinD, K3s, eBPF, etc.
 
-Example of running commands with the `docker.io/node:16` image.
+Example of running commands with the `docker.io/node:latest` image.
 
 ```yaml
-
 jobs:
   specs:
     name: test
     runs-on: actuated
     container:
-      image: docker.io/node:16
+      image: docker.io/node:latest
       env:
         NODE_ENV: development
       ports:
@@ -176,7 +187,11 @@ Depending on your provider, you may also be able to hibernate or suspend servers
 
 ## What do I need to change in my workflows to use actuated?
 
-Very little, just add / set `runs-on: actuated`
+The changes to your workflow YAML file are minimal.
+
+Just set `runs-on` to the actuated label plus the amount of CPUs and RAM you'd like. The order is fixed, but the values for vCPU/RAM are flexible and can be set as required.
+
+You can set something like: `runs-on: actuated-4cpu-16gb` or `runs-on: actuated-arm64-8cpu-32gb`.
 
 ## Is 64-bit Arm supported?
 
@@ -187,6 +202,8 @@ Yes, actuated is built to run on both Intel/AMD and 64-bit Arm hosts, check your
 The VM image contains similar software to the hosted runner image: `ubuntu-latest` offered by GitHub. Unfortunately, GitHub does not publish this image, so we've done our best through user-testing to reconstruct it, including all the Kernel modules required to run Kubernetes and Docker.
 
 The image is built automatically using GitHub Actions and is available on a container registry.
+
+The primary guest OS version is Ubuntu 22.04. Ubuntu 20.04 is available on request.
 
 ## What Kernel version is being used?
 
@@ -215,8 +232,8 @@ For actuated, you'll need to take a different approach to build a DKMS or kmod m
 Add [self-actuated/get-kernel-sources](https://github.com/self-actuated/get-kernel-sources) to your workflow and run it before your build step.
 
 ```yaml
-      - name: Install kernel headers (actuated)
-        uses: self-actuated/get-kernel-sources@master
+      - name: Install Kernel headers
+        uses: self-actuated/get-kernel-sources@v1
 ```
 
 An `if` statement can be added to the block, if you also run the same job on various other types of runners outside of actuated.
@@ -245,6 +262,14 @@ We also offer a SSH gateway in some of our tiers, tell us if this is important t
 
 See also: [Debug a GitHub Action with SSH](/tasks/debug-ssh)
 
+## How can an actuated runner get IAM permissions for AWS?
+
+If you need to publish images to Amazon Elastic Container Registry (ECR), you can either assign a role to any EC2 bare-metal instances that you're using with actuated, or use GitHub's built-in OpenID Connect support.
+
+Web Identity Federation means that a job can assume a role within AWS using Secure Token Service (STS) without needing any long-lived credentials.
+
+Read more: [Configuring OpenID Connect in Amazon Web Services](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
+
 ## Comparison to other solutions
 
 Feel free [to book a call with us](register) if you'd like to understand this comparison in more detail.
@@ -261,14 +286,6 @@ Feel free [to book a call with us](register) if you'd like to understand this co
 > `2` Builds on public GitHub repositories are free with the standard hosted runners, however private repositories require billing information, after the initial included minutes are consumed.
 
 You can only get VM-level isolation from either GitHub hosted runners or Actuated. Standard self-hosted runners have no isolation between builds and actions-runtime-controller requires either a Docker socket to be mounted or Docker In Docker (a privileged container) to build and run containers.
-
-### What about IAM permissions for AWS?
-
-If you need to publish images to Amazon Elastic Container Registry (ECR), you can either assign a role to any EC2 bare-metal instances that you're using with actuated, or use GitHub's built-in OpenID Connect support.
-
-Web Identity Federation means that a job can assume a role within AWS using Secure Token Service (STS) without needing any long-lived credentials.
-
-Read more: [Configuring OpenID Connect in Amazon Web Services](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
 
 ### How does actuated compare to a actions-runtime-controller (ARC)?
 
@@ -321,7 +338,9 @@ If you only needed to run Arm builds from 9-5pm, you could absolutely delete the
 
 ## Is there GPU support?
 
-We are [currently exploring](https://twitter.com/alexellisuk/status/1594368789864501254?s=20&t=VwSXsR_yeC0hlU7wdFF4Mg) dedicating a GPU to a build. So if an Actuated Server had 8x GPUs, you could run 8x GPU-based builds on that host at once, each with one GPU, or 2x jobs with 4x GPUS etc. Let us know if this is something you need when you get in touch with us.
+Yes, both for GitHub and GitLab CI.
+
+See also: [Accelerate GitHub Actions with dedicated GPUs](https://actuated.dev/blog/gpus-for-github-actions)
 
 ## Can Virtual Machines be launched within a GitHub Action?
 
@@ -333,7 +352,15 @@ It's disabled by default, but you can opt-in to the feature by following the ste
 
 [How to run a KVM guest in your GitHub Actions](https://actuated.dev/blog/kvm-in-github-actions)
 
-At time of writing, only Intel and AMD CPUs support nested virtualisation. This may be on by default, but if not, you can enable it in the system's BIOS or out of band console.
+At time of writing, only Intel and AMD CPUs support nested virtualisation.
+
+What about Arm? According to our contacts at Ampere, the latest versions of Arm hardware have some support for nested virtualisation, but the patches for the Linux Kernel are not ready.
+
+## Can I use a VM for an actuated server instead of bare-metal?
+
+If `/dev/kvm` is available within the VM, or the VM can be configured so that nested virtualisation is available, then you can use a VM as an actuated server. Any VMs that are launched for CI jobs will be launched with nested virtualisation, and will have some additional overheads compared to a bare-metal server.
+
+See also: [Provision a server](/provision-server)
 
 ## Is Windows or MacOS supported?
 
