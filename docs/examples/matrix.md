@@ -29,7 +29,7 @@ on:
 jobs:
   arkade-e2e:
     name: arkade-e2e
-    runs-on: actuated
+    runs-on: actuated-4cpu-12gb
     strategy:
       matrix:
         apps: [run-job,k3sup,arkade,kubectl,faas-cli]

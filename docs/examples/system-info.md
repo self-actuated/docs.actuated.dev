@@ -66,7 +66,7 @@ on:
 jobs:
   specs:
     name: specs
-    runs-on: actuated
+    runs-on: actuated-4cpu-12gb
     steps:
       - uses: actions/checkout@v1
       - name: Check specs

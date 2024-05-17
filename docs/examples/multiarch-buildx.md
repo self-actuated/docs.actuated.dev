@@ -60,7 +60,7 @@ jobs:
 +      packages: write
 
 -   runs-on: ubuntu-latest
-+   runs-on: actuated
++   runs-on: actuated-4cpu-12gb
     steps:
       - uses: actions/checkout@master
         with:
@@ -76,11 +76,11 @@ jobs:
         run: echo "REPO_OWNER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" > $GITHUB_ENV
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       - name: Login to container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
@@ -88,7 +88,7 @@ jobs:
 
       - name: Release build
         id: release_build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           outputs: "type=registry,push=true"
           platforms: linux/amd64,linux/arm/v6,linux/arm64
@@ -103,17 +103,17 @@ jobs:
 
 You'll see that we added a `Setup mirror` step, this explained in the [Registry Mirror example](/tasks/registry-mirror)
 
-The `docker/setup-qemu-action@v2` step is responsible for setting up QEMU, which is used to emulate the different CPU architectures.
+The `docker/setup-qemu-action@v3` step is responsible for setting up QEMU, which is used to emulate the different CPU architectures.
 
-The `docker/build-push-action@v3` step is responsible for passing in a number of platform combinations such as: `linux/amd64` for cloud, `linux/arm64` for Arm servers and `linux/arm/v6` for Raspberry Pi.
+The `docker/build-push-action@v5` step is responsible for passing in a number of platform combinations such as: `linux/amd64` for cloud, `linux/arm64` for Arm servers and `linux/arm/v6` for Raspberry Pi.
 
 Within [the Dockerfile](https://github.com/inlets/inlets-operator/blob/master/Dockerfile), we needed to make a couple of changes.
 
 You can pick to run the step in either the BUILDPLATFORM or TARGETPLATFORM. The BUILDPLATFORM is the native architecture and platform of the machine performing the build, this is usually amd64. The TARGETPLATFORM is important for the final step of the build, and will be injected based upon one each of the platforms you have specified in the step.
 
 ```diff
-- FROM golang:1.18 as builder
-+ FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.18 as builder
+- FROM golang:1.22 as builder
++ FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1.22 as builder
 ```
 
 For Go specifically, we also updated the `go build` command to tell Go to use cross-compilation based upon the TARGETOS and TARGETARCH environment variables, which are populated by Docker.

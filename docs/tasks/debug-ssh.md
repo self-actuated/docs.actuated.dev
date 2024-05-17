@@ -34,7 +34,7 @@ permissions:
 jobs:
   connect:
     name: connect
-    runs-on: actuated
+    runs-on: actuated-4cpu-12gb
     steps:
     - uses: self-actuated/connect-ssh@master
 ```

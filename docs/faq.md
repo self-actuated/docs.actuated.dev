@@ -138,7 +138,7 @@ Example of running commands with the `docker.io/node:latest` image.
 jobs:
   specs:
     name: test
-    runs-on: actuated
+    runs-on: actuated-4cpu-12gb
     container:
       image: docker.io/node:latest
       env:

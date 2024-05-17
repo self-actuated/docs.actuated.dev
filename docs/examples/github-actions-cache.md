@@ -23,7 +23,7 @@ on: push
 
 jobs:
   build:
-    runs-on: actuated
+    runs-on: actuated-4cpu-12gb
     steps:
       - uses: actions/checkout@v3
         with:
@@ -57,7 +57,7 @@ on: push
 
 jobs:
   build:
-    runs-on: actuated
+    runs-on: actuated-4cpu-12gb
     steps:
       - uses: actions/checkout@v3
         with:

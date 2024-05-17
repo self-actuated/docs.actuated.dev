@@ -203,20 +203,7 @@ jobs:
 +    runs-on: actuated-arm64-8cpu-32gb
 ```
 
-You can also customise the VM size for each job:
-
-```diff
-name: ci
-
-on: push
-
-jobs:
-  build-golang:
--    runs-on: actuated
-+    runs-on: actuated-4cpu-8gb
-```
-
-> In a future version of actuated, you'll be able to specify `actuated-any` if you don't mind whether the job runs on one of your amd64 or arm64 servers.
+> You can also specify `actuated-any-4cpu-8gb` if you don't mind whether the job runs on one of your amd64 or arm64 servers.
 
 ### Other considerations
 

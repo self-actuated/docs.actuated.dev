@@ -26,7 +26,7 @@ For alexellis' repository called [alexellis/autoscaling-functions](https://githu
 * Only the bcrypt function is being built with the `--filter` command added, remove it to build all functions in the stack.yml.
 * `--platforms linux/amd64,linux/arm64,linux/arm/v7` will build for regular Intel/AMD machines, 64-bit Arm and 32-bit Arm i.e. Raspberry Pi, most users can reduce this list to just "linux/amd64" for a speed improvement
 
-Make sure you edit `runs-on:` and set it to `runs-on: actuated`
+Make sure you edit `runs-on:` and set it to `runs-on: actuated-4cpu-12gb`
 
 ```yaml
 name: publish
@@ -47,7 +47,7 @@ permissions:
 
 jobs:
   publish:
-    runs-on: actuated
+    runs-on: actuated-4cpu-12gb
     steps:
       - uses: actions/checkout@master
         with:
@@ -57,9 +57,9 @@ jobs:
       - name: Pull custom templates from stack.yml
         run: faas-cli template pull stack
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v3
       - name: Get TAG
         id: get_tag
         run: echo ::set-output name=TAG::latest-dev
